@@ -19,8 +19,8 @@ class DashBoard extends StatelessWidget {
             Icons.dashboard,
             color: Colors.black,
           ),
-          title: const Text(
-            'Dashboard',
+          title: Text(
+            'dashboard'.tr,
             style: TextStyle(
                 color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
           ),

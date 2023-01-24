@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hal_khata/screens/add_product_screen.dart';
+import 'package:hal_khata/screens/sell_products.dart';
 import 'package:hal_khata/screens/category_maneger_screen.dart';
 import 'package:hal_khata/screens/dashboard_screen.dart';
 import 'package:hal_khata/screens/stock_maneger_screen.dart';
@@ -24,11 +24,11 @@ class ViewScreenContainer extends StatelessWidget {
           case 0:
             return DashBoard();
           case 1:
-            return const StockManeger();
+            return StockManeger();
           case 2:
-            return const CategoryManeger();
+            return CategoryManeger();
           case 3:
-            return const AddProductScreen();
+            return SaleProductScreen();
           case 4:
             return const StoreScreen();
           case 5:

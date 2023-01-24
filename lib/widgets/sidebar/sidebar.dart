@@ -91,8 +91,8 @@ class SideBar extends StatelessWidget {
           label: 'category_maneger'.tr,
         ),
         SidebarXItem(
-          icon: Icons.production_quantity_limits,
-          label: 'add_product'.tr,
+          icon: Icons.local_grocery_store_rounded,
+          label: 'sale_product'.tr,
         ),
         SidebarXItem(
           icon: Icons.store,
