@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hal_khata/controllers/pos_controller/pos_controller.dart';
-import 'package:hal_khata/controllers/products_and_category_controller/category_controller.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
 
 class SaleProductScreen extends StatefulWidget {
@@ -13,14 +12,11 @@ class SaleProductScreen extends StatefulWidget {
 
 class _SaleProductScreenState extends State<SaleProductScreen> {
   final PosController _controller = Get.put(PosController());
-
-  final CategoryController _categoryController = Get.put(CategoryController());
+  //final StockController _stockController = Get.put(StockController());
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _controller.dispose();
-    _categoryController.dispose();
     super.dispose();
   }
 
@@ -41,7 +37,8 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                       searchBoxWidth: MediaQuery.of(context).size.width / 3,
                       buttonBorderColour: Colors.black45,
                       onChanged: _controller.onSearchChanged,
-                      buttonColour: Colors.greenAccent,
+                      buttonColour: Colors.white,
+                      buttonElevation: 4,
                       onFieldSubmitted: _controller.onSearchSubmit,
                       buttonWidget: const Icon(
                         Icons.search,
@@ -89,33 +86,46 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                           child: ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                return Container(
-                                  width: 80,
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 10.0, horizontal: 8.0),
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Center(
-                                    child: Text(
-                                      _categoryController
-                                          .categories[index].name,
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
+                                return InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _controller.selectedIndex.value = index;
+                                    });
+                                  },
+                                  child: Obx(() {
+                                    return Container(
+                                      width: 80,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 10.0, horizontal: 8.0),
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Center(
+                                        child: Text(
+                                          _controller.categories[index].name,
+                                          style: TextStyle(
+                                              color: _controller.selectedIndex
+                                                          .value ==
+                                                      index
+                                                  ? Colors.white
+                                                  : Colors.black),
+                                        ),
+                                      ),
+                                      decoration: BoxDecoration(
+                                          color:
+                                              _controller.selectedIndex.value ==
+                                                      index
+                                                  ? Colors.black
+                                                  : Color.fromARGB(
+                                                      255, 226, 226, 226),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                    );
+                                  }),
                                 );
                               },
                               separatorBuilder: (context, index) {
                                 return const SizedBox(width: 8.0);
                               },
-                              itemCount:
-                                  _categoryController.categories.length)),
-                      ListView.separated(
-                          itemBuilder: (context, index) {},
-                          separatorBuilder: (context, index) {},
-                          itemCount: itemCount)
+                              itemCount: _controller.categories.length)),
                     ],
                   ),
                 ))),
